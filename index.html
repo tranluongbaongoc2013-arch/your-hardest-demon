@@ -1,130 +1,871 @@
-
 <!DOCTYPE html>
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Your Hardest Demon</title>
+<meta name="theme-color" content="#0b0913">
+<title>Your Hardest Demon You Can Beat</title>
+
 <style>
-:root{color-scheme:dark;--bg:#0b0a12;--panel:#151321;--pink:#ff426d;--purple:#a879ff;--muted:#aaa5bd}
+:root{
+  color-scheme:dark;
+  --bg:#0b0913;
+  --panel:#151221;
+  --pink:#ff477e;
+  --purple:#a779ff;
+  --text:#f7f3ff;
+  --muted:#aaa2bb;
+  --gold:#ffd36c;
+  --line:#302741;
+}
+
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:white;font-family:Arial,sans-serif}
-header{background:#12101d;border-bottom:1px solid #30263e;padding:18px 5%;display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap}
-.logo{font-size:21px;font-weight:900;letter-spacing:-1px}.logo span{color:var(--pink)}
-button{cursor:pointer;border:0;border-radius:9px;padding:11px 15px;font-weight:bold;background:var(--pink);color:white}
-button.secondary{background:#292438}
-main{max-width:1050px;margin:auto;padding:28px 18px}
-.hero{padding:35px 25px;border:1px solid #39243e;border-radius:18px;background:radial-gradient(ellipse at 80% 10%,#49213d,transparent 55%),linear-gradient(135deg,#21152b,#100e19)}
-.eyebrow{color:#ff85a1;font-size:12px;letter-spacing:3px;font-weight:bold}
-h1{font-size:clamp(32px,7vw,55px);margin:12px 0;line-height:1.05}
-p{color:var(--muted);line-height:1.6}
-.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}
-.stat,.card,.formbox{background:var(--panel);border:1px solid #292438;border-radius:13px;padding:16px}
-.stat strong{display:block;font-size:23px;margin-bottom:5px}.stat span{font-size:12px;color:var(--muted)}
-.sectionhead{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin:30px 0 15px}
-.sectionhead h2{margin:0}
-input,textarea{width:100%;padding:12px;border:1px solid #39334b;border-radius:8px;background:#0e0c17;color:white;margin:6px 0 13px;font:inherit}
-label{font-size:13px;color:#d1c9df}
-.level{display:grid;grid-template-columns:55px 110px minmax(0,1fr) auto;gap:15px;align-items:center;margin-bottom:10px}
-.rank{font-size:23px;font-weight:900;color:#ffd16c;text-align:center}
-.thumb{width:110px;height:75px;object-fit:cover;border-radius:8px;background:#282137}
-.level h3{margin:0 0 7px;overflow-wrap:anywhere}
-.small{font-size:12px;color:var(--muted)}
-.vote{background:#2b203c;color:#e0c8ff;white-space:nowrap}
-.formbox{margin-top:15px}
-.hidden{display:none}
-footer{text-align:center;padding:28px;color:#777187;font-size:12px}
-@media(max-width:580px){.level{grid-template-columns:35px 75px minmax(0,1fr);gap:9px}.thumb{width:75px;height:65px}.level .vote{grid-column:3;justify-self:start}.stats{gap:7px}.stat{padding:11px}.stat strong{font-size:19px}.hero{padding:25px 18px}}
+
+html{scroll-behavior:smooth}
+
+body{
+  margin:0;
+  background:radial-gradient(ellipse at 50% -15%,#29183c 0,transparent 48%),var(--bg);
+  color:var(--text);
+  font-family:Arial,sans-serif;
+}
+
+button,input,select{font:inherit}
+
+button{
+  cursor:pointer;
+  border:0;
+  border-radius:10px;
+  padding:11px 15px;
+  font-weight:800;
+  color:white;
+  background:linear-gradient(135deg,var(--pink),#d737a6);
+}
+
+button:hover{filter:brightness(1.12)}
+
+button:disabled{
+  opacity:.5;
+  cursor:not-allowed;
+}
+
+button.secondary{
+  background:#2b243b;
+  border:1px solid #433653;
+}
+
+header{
+  position:sticky;
+  top:0;
+  z-index:5;
+  background:#100d1bea;
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line);
+  padding:14px max(18px,calc((100% - 1150px)/2));
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+}
+
+.logo{
+  font-size:clamp(15px,2.6vw,22px);
+  font-weight:1000;
+  letter-spacing:-.8px;
+}
+
+.logo span{color:var(--pink)}
+
+main{
+  max-width:1150px;
+  margin:auto;
+  padding:26px 18px 50px;
+}
+
+.hero{
+  padding:clamp(24px,5vw,48px);
+  border:1px solid #4b2b56;
+  border-radius:22px;
+  background:
+    radial-gradient(ellipse at 82% 10%,#63264c99,transparent 48%),
+    radial-gradient(ellipse at 5% 100%,#41277877,transparent 42%),
+    linear-gradient(135deg,#21162e,#100d19);
+}
+
+.eyebrow{
+  color:#ff8eb0;
+  font-size:11px;
+  letter-spacing:3px;
+  font-weight:900;
+}
+
+h1{
+  font-size:clamp(32px,7vw,62px);
+  line-height:.99;
+  letter-spacing:-2px;
+  margin:14px 0;
+}
+
+p{
+  color:var(--muted);
+  line-height:1.65;
+}
+
+.actions{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:22px;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+  margin:16px 0 28px;
+}
+
+.stat,.card,.formbox{
+  background:linear-gradient(145deg,#191527,#13101d);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:16px;
+}
+
+.stat strong{
+  display:block;
+  font-size:clamp(19px,3vw,27px);
+  margin-bottom:5px;
+  overflow-wrap:anywhere;
+}
+
+.stat span{
+  font-size:11px;
+  color:var(--muted);
+  letter-spacing:1.3px;
+  font-weight:800;
+}
+
+.sectionhead{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  flex-wrap:wrap;
+  margin:30px 0 15px;
+}
+
+.sectionhead h2{margin:0;font-size:24px}
+
+.filters{
+  display:grid;
+  grid-template-columns:minmax(180px,1.5fr) repeat(2,minmax(145px,1fr));
+  gap:9px;
+  margin-bottom:15px;
+}
+
+input,select{
+  width:100%;
+  min-width:0;
+  padding:12px;
+  border:1px solid #393149;
+  border-radius:9px;
+  background:#0e0b17;
+  color:white;
+  outline:none;
+}
+
+input:focus,select:focus{
+  border-color:var(--purple);
+}
+
+.level{
+  display:grid;
+  grid-template-columns:54px 100px minmax(0,1fr) auto;
+  gap:14px;
+  align-items:center;
+  margin-bottom:10px;
+  padding:12px;
+}
+
+.rank{
+  font-size:23px;
+  font-weight:1000;
+  color:var(--gold);
+  text-align:center;
+}
+
+.thumb{
+  width:100px;
+  height:72px;
+  object-fit:cover;
+  border-radius:9px;
+  background:linear-gradient(135deg,#402b66,#171321);
+  display:grid;
+  place-items:center;
+  overflow:hidden;
+  color:#e7c7ff;
+  font-size:24px;
+  border:1px solid #ffffff12;
+}
+
+.thumb img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.level h3{
+  margin:0 0 7px;
+  font-size:17px;
+  overflow-wrap:anywhere;
+}
+
+.small{
+  font-size:12px;
+  color:var(--muted);
+  line-height:1.55;
+}
+
+.tags{
+  display:flex;
+  gap:6px;
+  flex-wrap:wrap;
+  margin-top:7px;
+}
+
+.tag{
+  font-size:10px;
+  font-weight:900;
+  letter-spacing:.5px;
+  padding:4px 7px;
+  border-radius:6px;
+  background:#2a203b;
+  color:#dec7ff;
+}
+
+.tag.extreme{
+  background:#4a1c32;
+  color:#ff9fbc;
+}
+
+.tag.upcoming{
+  background:#47371b;
+  color:#ffdc8c;
+}
+
+.tag.easy{
+  background:#183e37;
+  color:#8cf2ce;
+}
+
+.vote{
+  background:#2b203c;
+  color:#e0c8ff;
+  white-space:nowrap;
+  border:1px solid #49345f;
+}
+
+.vote.voted{
+  background:#3c234b;
+  border-color:var(--pink);
+  color:#ffb1cc;
+}
+
+.formbox{margin-top:18px}
+
+.formgrid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:0 12px;
+}
+
+.field{margin-bottom:10px}
+
+.field label{
+  display:block;
+  font-size:12px;
+  color:#d1c9df;
+  margin-bottom:6px;
+}
+
+.full{grid-column:1/-1}
+
+.hidden{display:none!important}
+
+.notice{
+  border:1px solid #49385b;
+  background:#1b1528;
+  padding:12px 14px;
+  border-radius:10px;
+  color:#c9bfd8;
+  font-size:12px;
+  line-height:1.6;
+  margin:14px 0;
+}
+
+.empty{
+  text-align:center;
+  padding:30px;
+  color:var(--muted);
+}
+
+footer{
+  text-align:center;
+  padding:28px;
+  color:#777187;
+  font-size:12px;
+  border-top:1px solid #211a2e;
+}
+
+.toast{
+  position:fixed;
+  bottom:18px;
+  left:50%;
+  transform:translateX(-50%);
+  z-index:10;
+  background:#28203a;
+  border:1px solid #5c4275;
+  color:#fff;
+  padding:12px 16px;
+  border-radius:10px;
+  max-width:90vw;
+}
+
+@media(max-width:650px){
+  header{padding:12px 14px}
+  .logo{max-width:220px}
+
+  .filters{grid-template-columns:1fr 1fr}
+  .filters input{grid-column:1/-1}
+
+  .level{
+    grid-template-columns:34px 68px minmax(0,1fr);
+    gap:9px;
+    padding:10px;
+  }
+
+  .thumb{width:68px;height:62px}
+  .level h3{font-size:15px}
+
+  .vote{
+    grid-column:3;
+    justify-self:start;
+    padding:8px 12px;
+  }
+
+  .stats{gap:7px}
+  .stat{padding:11px}
+  .hero{border-radius:16px}
+  .formgrid{grid-template-columns:1fr}
+  .full{grid-column:auto}
+}
 </style>
 </head>
+
 <body>
+
 <header>
-  <div class="logo">YOUR HARDEST <span>DEMON</span></div>
-  <button onclick="showAccount()">PLAYER LOGIN</button>
-</header>
-<main>
-  <section class="hero">
-    <div class="eyebrow">GEOMETRY DASH COMMUNITY</div>
-    <h1>WHAT IS YOUR<br>HARDEST DEMON?</h1>
-    <p>Discover the hardest levels. Submit your demons. Vote with the community.</p>
-    <div class="actions">
-      <button onclick="document.querySelector('#rankings').scrollIntoView({behavior:'smooth'})">🏆 EXPLORE DEMON LIST</button>
-      <button class="secondary" onclick="showSubmit()">＋ SUBMIT A DEMON</button>
-    </div>
-  </section>
-  <div class="stats">
-    <div class="stat"><strong id="total">4</strong><span>DEMONS</span></div>
-    <div class="stat"><strong id="votes">0</strong><span>DEMO VOTES</span></div>
-    <div class="stat"><strong>COMMUNITY</strong><span>RANKING SYSTEM</span></div>
+  <div class="logo">
+    YOUR HARDEST <span>DEMON</span> YOU CAN BEAT
   </div>
-  <section id="rankings">
-    <div class="sectionhead">
-      <h2>🔥 Demon List</h2>
-      <input id="search" placeholder="Search Demon..." style="max-width:220px;margin:0" oninput="render()">
+  <button onclick="toggleSubmit()">＋ ADD DEMON</button>
+</header>
+
+<main>
+
+<section class="hero">
+  <div class="eyebrow">GEOMETRY DASH · COMMUNITY RANKINGS</div>
+
+  <h1>
+    YOUR HARDEST DEMON.<br>
+    <span style="color:var(--pink)">YOUR NEXT CHALLENGE.</span>
+  </h1>
+
+  <p>
+    Vote for the levels you think deserve the top spot.
+    From Easy Demon to Extreme Demon — the community decides the ranking.
+  </p>
+
+  <div class="actions">
+    <button onclick="document.querySelector('#rankings').scrollIntoView({behavior:'smooth'})">
+      🏆 EXPLORE THE LIST
+    </button>
+
+    <button class="secondary" onclick="toggleSubmit()">
+      ＋ SUBMIT A DEMON
+    </button>
+  </div>
+</section>
+
+<div class="stats">
+  <div class="stat">
+    <strong id="total">0</strong>
+    <span>LEVELS</span>
+  </div>
+
+  <div class="stat">
+    <strong id="votes">0</strong>
+    <span>TOTAL VOTES</span>
+  </div>
+
+  <div class="stat">
+    <strong id="topName" style="font-size:18px">—</strong>
+    <span>#1 BY VOTES</span>
+  </div>
+</div>
+
+<div class="notice">
+  <strong>Preview mode:</strong>
+  Levels and votes are saved in this browser only.
+  To share one global leaderboard between all visitors,
+  connect a database such as Supabase.
+</div>
+
+<section id="rankings">
+
+  <div class="sectionhead">
+    <h2>🔥 Demon Leaderboard</h2>
+    <span class="small">Most votes = #1</span>
+  </div>
+
+  <div class="filters">
+    <input
+      id="search"
+      placeholder="🔎 Search level or creator..."
+      oninput="render()"
+    >
+
+    <select id="typeFilter" onchange="render()">
+      <option value="all">All categories</option>
+      <option>Easy Demon</option>
+      <option>Medium Demon</option>
+      <option>Hard Demon</option>
+      <option>Insane Demon</option>
+      <option>Extreme Demon</option>
+      <option>Upcoming Demon</option>
+    </select>
+
+    <select id="sortFilter" onchange="render()">
+      <option value="votes">Sort: Most votes</option>
+      <option value="difficulty">Sort: Difficulty</option>
+      <option value="name">Sort: Name A–Z</option>
+      <option value="newest">Sort: Recently added</option>
+    </select>
+  </div>
+
+  <div id="list"></div>
+
+</section>
+
+<section class="formbox hidden" id="submit">
+  <h2>＋ Submit a Demon</h2>
+  <p>Add a level to the list.</p>
+
+  <form id="demonForm">
+    <div class="formgrid">
+
+      <div class="field">
+        <label for="name">Demon / level name *</label>
+        <input id="name" required maxlength="80" placeholder="e.g. Bloodbath">
+      </div>
+
+      <div class="field">
+        <label for="creator">Creator</label>
+        <input id="creator" maxlength="60" placeholder="Level creator">
+      </div>
+
+      <div class="field">
+        <label for="category">Category *</label>
+        <select id="category" required>
+          <option>Easy Demon</option>
+          <option>Medium Demon</option>
+          <option>Hard Demon</option>
+          <option>Insane Demon</option>
+          <option selected>Extreme Demon</option>
+          <option>Upcoming Demon</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="difficulty">Difficulty score (1–10)</label>
+        <input id="difficulty" type="number" min="1" max="10" step=".1" value="10" required>
+      </div>
+
+      <div class="field full">
+        <label for="image">Thumbnail image URL (optional)</label>
+        <input id="image" type="url" placeholder="https://example.com/thumbnail.jpg">
+      </div>
+
+      <div class="field full">
+        <button type="submit">ADD TO LIST</button>
+        <button type="button" class="secondary" onclick="toggleSubmit(false)">CANCEL</button>
+      </div>
+
     </div>
-    <div id="list"></div>
-    <p class="small">Sample levels are for preview only. Votes in this version are local demonstrations, not public votes.</p>
-  </section>
-  <section class="formbox hidden" id="submit">
-    <h2>＋ Submit a Demon</h2>
-    <p>Add a level to your local preview.</p>
-    <form id="demonForm">
-      <label>Demon name</label><input id="name" required maxlength="80" placeholder="e.g. Tidal Wave">
-      <label>Creator</label><input id="creator" maxlength="60" placeholder="Level creator">
-      <label>Thumbnail image</label><input id="image" type="file" accept="image/*">
-      <label>Difficulty (1–10)</label><input id="difficulty" type="number" min="1" max="10" value="10" required>
-      <button type="submit">ADD DEMON</button>
-      <button type="button" class="secondary" onclick="hideSubmit()">CANCEL</button>
-    </form>
-  </section>
-  <section class="formbox hidden" id="account">
-    <h2>Player Account</h2>
-    <p>Account login will be connected to the real backend in the next setup step.</p>
-    <label>Email</label><input type="email" placeholder="player@example.com">
-    <label>Password</label><input type="password" placeholder="Password">
-    <button onclick="alert('Demo only! Real registration requires backend setup.')">SIGN IN</button>
-    <button class="secondary" onclick="document.querySelector('#account').classList.add('hidden')">CLOSE</button>
-  </section>
+  </form>
+</section>
+
+<div class="actions">
+  <button class="secondary" onclick="resetDemo()">Reset demo data</button>
+</div>
+
 </main>
-<footer>YOUR HARDEST DEMON · COMMUNITY PROJECT</footer>
+
+<footer>
+  YOUR HARDEST DEMON YOU CAN BEAT · FAN-MADE COMMUNITY PROJECT
+  <br><br>
+  Not affiliated with RobTop Games.
+</footer>
+
+<div id="toast" class="toast hidden" role="status"></div>
+
 <script>
-const levels=[
-{name:"Tidal Wave",creator:"OniLink",difficulty:10,votes:0,color:"#254b72"},
-{name:"Silent clubstep",creator:"TheRealSailent",difficulty:9.7,votes:0,color:"#632b45"},
-{name:"Bloodbath",creator:"Riot",difficulty:9.3,votes:0,color:"#812b38"},
-{name:"Cataclysm",creator:"GDSheriff",difficulty:8.8,votes:0,color:"#40306b"}
+const STORAGE_KEY = 'your_hardest_demon_v1';
+
+const starterLevels = [
+  {
+    id:'tidal-wave',
+    name:'Tidal Wave',
+    creator:'OniLink',
+    category:'Extreme Demon',
+    difficulty:10,
+    votes:0,
+    image:'',
+    created:1
+  },
+  {
+    id:'silent-clubstep',
+    name:'Silent clubstep',
+    creator:'TheRealSailent',
+    category:'Extreme Demon',
+    difficulty:9.9,
+    votes:0,
+    image:'',
+    created:2
+  },
+  {
+    id:'bloodbath',
+    name:'Bloodbath',
+    creator:'Riot',
+    category:'Extreme Demon',
+    difficulty:9.7,
+    votes:0,
+    image:'',
+    created:3
+  },
+  {
+    id:'cataclysm',
+    name:'Cataclysm',
+    creator:'GDSheriff',
+    category:'Extreme Demon',
+    difficulty:9.2,
+    votes:0,
+    image:'',
+    created:4
+  },
+  {
+    id:'decode',
+    name:'Decode',
+    creator:'Revenge',
+    category:'Easy Demon',
+    difficulty:3.5,
+    votes:0,
+    image:'',
+    created:5
+  },
+  {
+    id:'the-nightmare',
+    name:'The Nightmare',
+    creator:'Jax',
+    category:'Easy Demon',
+    difficulty:2.5,
+    votes:0,
+    image:'',
+    created:6
+  },
+  {
+    id:'b',
+    name:'B',
+    creator:'Motleyorc',
+    category:'Medium Demon',
+    difficulty:5.5,
+    votes:0,
+    image:'',
+    created:7
+  },
+  {
+    id:'nine-circles',
+    name:'Nine Circles',
+    creator:'Zobros',
+    category:'Hard Demon',
+    difficulty:7,
+    votes:0,
+    image:'',
+    created:8
+  },
+  {
+    id:'future-funk',
+    name:'Future Funk',
+    creator:'JonathanGD',
+    category:'Insane Demon',
+    difficulty:8.4,
+    votes:0,
+    image:'',
+    created:9
+  },
+  {
+    id:'upcoming-demo',
+    name:'Example Upcoming Level',
+    creator:'Community',
+    category:'Upcoming Demon',
+    difficulty:9.5,
+    votes:0,
+    image:'',
+    created:10
+  }
 ];
-function render(){
- const q=document.querySelector('#search').value.toLowerCase();
- const sorted=levels.filter(x=>x.name.toLowerCase().includes(q)).sort((a,b)=>b.difficulty-a.difficulty);
- document.querySelector('#list').innerHTML=sorted.map((x,i)=>`
- <article class="card level">
- <div class="rank">#${levels.slice().sort((a,b)=>b.difficulty-a.difficulty).indexOf(x)+1}</div>
- <div class="thumb" style="background:linear-gradient(135deg,${x.color},#171321);display:grid;place-items:center;font-size:24px">◆</div>
- <div><h3>${escapeText(x.name)}</h3><div class="small">by ${escapeText(x.creator||'Unknown creator')}</div><div class="small">Difficulty ${x.difficulty}/10 · ${x.votes} votes</div></div>
- <button class="vote" onclick="vote('${escapeText(x.name).replace(/'/g,"&#39;")}')">▲ Vote</button>
- </article>`).join('')||'<p>No demons found.</p>';
- document.querySelector('#total').textContent=levels.length;
- document.querySelector('#votes').textContent=levels.reduce((s,x)=>s+x.votes,0);
+
+let state = loadState();
+
+function loadState(){
+  try{
+    const saved = localStorage.getItem(STORAGE_KEY);
+
+    if(saved){
+      const parsed = JSON.parse(saved);
+
+      if(Array.isArray(parsed.levels) && Array.isArray(parsed.voted)){
+        return parsed;
+      }
+    }
+  }catch(e){}
+
+  return {
+    levels:starterLevels.map(x=>({...x})),
+    voted:[]
+  };
 }
-function escapeText(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
-function vote(name){const x=levels.find(x=>x.name===name);if(x){x.votes++;x.difficulty=Math.min(10,Math.round((x.difficulty+0.1)*10)/10);render()}}
-function showSubmit(){document.querySelector('#submit').classList.remove('hidden');document.querySelector('#submit').scrollIntoView({behavior:'smooth'})}
-function hideSubmit(){document.querySelector('#submit').classList.add('hidden')}
-function showAccount(){document.querySelector('#account').classList.remove('hidden');document.querySelector('#account').scrollIntoView({behavior:'smooth'})}
+
+function saveState(){
+  try{
+    localStorage.setItem(STORAGE_KEY,JSON.stringify(state));
+  }catch(e){
+    toast('Could not save data in this browser.');
+  }
+}
+
+function escapeText(s){
+  return String(s??'').replace(/[&<>"']/g,c=>({
+    '&':'&amp;',
+    '<':'&lt;',
+    '>':'&gt;',
+    '"':'&quot;',
+    "'":'&#39;'
+  }[c]));
+}
+
+function slug(s){
+  return s.toLowerCase().trim()
+    .replace(/[^a-z0-9]+/g,'-')
+    .replace(/^-|-$/g,'')
+    +'-'+Date.now().toString(36);
+}
+
+function tagClass(category){
+  if(category==='Extreme Demon') return 'extreme';
+  if(category==='Upcoming Demon') return 'upcoming';
+  if(category==='Easy Demon') return 'easy';
+  return '';
+}
+
+function getRankedLevels(){
+  return state.levels.slice().sort((a,b)=>
+    b.votes-a.votes ||
+    b.difficulty-a.difficulty ||
+    a.name.localeCompare(b.name)
+  );
+}
+
+function render(){
+  const q=document.querySelector('#search').value.trim().toLowerCase();
+  const cat=document.querySelector('#typeFilter').value;
+  const sort=document.querySelector('#sortFilter').value;
+
+  let list=state.levels.filter(x=>
+    (x.name+' '+x.creator).toLowerCase().includes(q) &&
+    (cat==='all'||x.category===cat)
+  );
+
+  if(sort==='difficulty'){
+    list.sort((a,b)=>b.difficulty-a.difficulty||b.votes-a.votes);
+  }else if(sort==='name'){
+    list.sort((a,b)=>a.name.localeCompare(b.name));
+  }else if(sort==='newest'){
+    list.sort((a,b)=>b.created-a.created);
+  }else{
+    list.sort((a,b)=>
+      b.votes-a.votes ||
+      b.difficulty-a.difficulty ||
+      a.name.localeCompare(b.name)
+    );
+  }
+
+  const ranked=getRankedLevels();
+
+  document.querySelector('#list').innerHTML =
+    list.map(x=>{
+      const rank=ranked.findIndex(y=>y.id===x.id)+1;
+      const voted=state.voted.includes(x.id);
+
+      const thumb=x.image
+        ? `<img src="${escapeText(x.image)}" alt="" loading="lazy" onerror="this.parentElement.innerHTML='◆'">`
+        : '◆';
+
+      return `
+        <article class="card level">
+          <div class="rank">#${rank}</div>
+
+          <div class="thumb">${thumb}</div>
+
+          <div>
+            <h3>${escapeText(x.name)}</h3>
+
+            <div class="small">
+              by ${escapeText(x.creator||'Unknown creator')}
+            </div>
+
+            <div class="small">
+              Difficulty ${Number(x.difficulty).toFixed(1)}/10
+              · <strong>${x.votes}</strong>
+              vote${x.votes===1?'':'s'}
+            </div>
+
+            <div class="tags">
+              <span class="tag ${tagClass(x.category)}">
+                ${escapeText(x.category)}
+              </span>
+            </div>
+          </div>
+
+          <button
+            class="vote ${voted?'voted':''}"
+            ${voted?'disabled':''}
+            onclick="vote('${x.id}')"
+          >
+            ${voted?'✓ VOTED':'▲ VOTE'}
+          </button>
+        </article>
+      `;
+    }).join('') ||
+    '<div class="empty">No levels found. Try another search or submit a Demon!</div>';
+
+  const totalVotes=state.levels.reduce((sum,x)=>sum+x.votes,0);
+  const top=ranked[0];
+
+  document.querySelector('#total').textContent=state.levels.length;
+  document.querySelector('#votes').textContent=totalVotes;
+  document.querySelector('#topName').textContent=top?top.name:'—';
+}
+
+function vote(id){
+  if(state.voted.includes(id)){
+    toast('You have already voted for this level in this browser.');
+    return;
+  }
+
+  const level=state.levels.find(x=>x.id===id);
+  if(!level)return;
+
+  level.votes++;
+  state.voted.push(id);
+
+  saveState();
+  render();
+  toast('Vote saved!');
+}
+
+function toggleSubmit(force){
+  const el=document.querySelector('#submit');
+
+  if(typeof force==='boolean'){
+    el.classList.toggle('hidden',!force);
+  }else{
+    el.classList.toggle('hidden');
+  }
+
+  if(!el.classList.contains('hidden')){
+    el.scrollIntoView({behavior:'smooth',block:'start'});
+  }
+}
+
+function toast(message){
+  const el=document.querySelector('#toast');
+
+  el.textContent=message;
+  el.classList.remove('hidden');
+
+  clearTimeout(window.__toastTimer);
+
+  window.__toastTimer=setTimeout(()=>{
+    el.classList.add('hidden');
+  },2600);
+}
+
 document.querySelector('#demonForm').addEventListener('submit',e=>{
- e.preventDefault();
- const file=document.querySelector('#image').files[0];
- const name=document.querySelector('#name').value.trim();
- if(!name)return;
- const d={name,creator:document.querySelector('#creator').value.trim()||'Community member',difficulty:Number(document.querySelector('#difficulty').value),votes:0,color:'#48345e'};
- levels.push(d);
- if(file){const reader=new FileReader();reader.onload=()=>{d.preview=reader.result;renderThumbs()};reader.readAsDataURL(file)}
- e.target.reset();hideSubmit();render();
+  e.preventDefault();
+
+  const name=document.querySelector('#name').value.trim();
+
+  if(!name)return;
+
+  if(state.levels.some(x=>x.name.toLowerCase()===name.toLowerCase())){
+    toast('A level with this name is already in the list.');
+    return;
+  }
+
+  const difficulty=Math.max(
+    1,
+    Math.min(10,Number(document.querySelector('#difficulty').value)||10)
+  );
+
+  state.levels.push({
+    id:slug(name),
+    name,
+    creator:document.querySelector('#creator').value.trim()||'Community member',
+    category:document.querySelector('#category').value,
+    difficulty,
+    votes:0,
+    image:document.querySelector('#image').value.trim(),
+    created:Date.now()
+  });
+
+  saveState();
+
+  e.target.reset();
+  document.querySelector('#difficulty').value='10';
+
+  toggleSubmit(false);
+  render();
+
+  toast('Demon added to the list!');
 });
-function renderThumbs(){}
+
+function resetDemo(){
+  if(!confirm('Reset all local levels and votes?'))return;
+
+  state={
+    levels:starterLevels.map(x=>({...x})),
+    voted:[]
+  };
+
+  saveState();
+  render();
+  toast('Demo data reset.');
+}
+
 render();
 </script>
+
 </body>
 </html>
