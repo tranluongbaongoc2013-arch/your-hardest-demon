@@ -1,0 +1,130 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Your Hardest Demon</title>
+<style>
+:root{color-scheme:dark;--bg:#0b0a12;--panel:#151321;--pink:#ff426d;--purple:#a879ff;--muted:#aaa5bd}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:white;font-family:Arial,sans-serif}
+header{background:#12101d;border-bottom:1px solid #30263e;padding:18px 5%;display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap}
+.logo{font-size:21px;font-weight:900;letter-spacing:-1px}.logo span{color:var(--pink)}
+button{cursor:pointer;border:0;border-radius:9px;padding:11px 15px;font-weight:bold;background:var(--pink);color:white}
+button.secondary{background:#292438}
+main{max-width:1050px;margin:auto;padding:28px 18px}
+.hero{padding:35px 25px;border:1px solid #39243e;border-radius:18px;background:radial-gradient(ellipse at 80% 10%,#49213d,transparent 55%),linear-gradient(135deg,#21152b,#100e19)}
+.eyebrow{color:#ff85a1;font-size:12px;letter-spacing:3px;font-weight:bold}
+h1{font-size:clamp(32px,7vw,55px);margin:12px 0;line-height:1.05}
+p{color:var(--muted);line-height:1.6}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}
+.stat,.card,.formbox{background:var(--panel);border:1px solid #292438;border-radius:13px;padding:16px}
+.stat strong{display:block;font-size:23px;margin-bottom:5px}.stat span{font-size:12px;color:var(--muted)}
+.sectionhead{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin:30px 0 15px}
+.sectionhead h2{margin:0}
+input,textarea{width:100%;padding:12px;border:1px solid #39334b;border-radius:8px;background:#0e0c17;color:white;margin:6px 0 13px;font:inherit}
+label{font-size:13px;color:#d1c9df}
+.level{display:grid;grid-template-columns:55px 110px minmax(0,1fr) auto;gap:15px;align-items:center;margin-bottom:10px}
+.rank{font-size:23px;font-weight:900;color:#ffd16c;text-align:center}
+.thumb{width:110px;height:75px;object-fit:cover;border-radius:8px;background:#282137}
+.level h3{margin:0 0 7px;overflow-wrap:anywhere}
+.small{font-size:12px;color:var(--muted)}
+.vote{background:#2b203c;color:#e0c8ff;white-space:nowrap}
+.formbox{margin-top:15px}
+.hidden{display:none}
+footer{text-align:center;padding:28px;color:#777187;font-size:12px}
+@media(max-width:580px){.level{grid-template-columns:35px 75px minmax(0,1fr);gap:9px}.thumb{width:75px;height:65px}.level .vote{grid-column:3;justify-self:start}.stats{gap:7px}.stat{padding:11px}.stat strong{font-size:19px}.hero{padding:25px 18px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">YOUR HARDEST <span>DEMON</span></div>
+  <button onclick="showAccount()">PLAYER LOGIN</button>
+</header>
+<main>
+  <section class="hero">
+    <div class="eyebrow">GEOMETRY DASH COMMUNITY</div>
+    <h1>WHAT IS YOUR<br>HARDEST DEMON?</h1>
+    <p>Discover the hardest levels. Submit your demons. Vote with the community.</p>
+    <div class="actions">
+      <button onclick="document.querySelector('#rankings').scrollIntoView({behavior:'smooth'})">🏆 EXPLORE DEMON LIST</button>
+      <button class="secondary" onclick="showSubmit()">＋ SUBMIT A DEMON</button>
+    </div>
+  </section>
+  <div class="stats">
+    <div class="stat"><strong id="total">4</strong><span>DEMONS</span></div>
+    <div class="stat"><strong id="votes">0</strong><span>DEMO VOTES</span></div>
+    <div class="stat"><strong>COMMUNITY</strong><span>RANKING SYSTEM</span></div>
+  </div>
+  <section id="rankings">
+    <div class="sectionhead">
+      <h2>🔥 Demon List</h2>
+      <input id="search" placeholder="Search Demon..." style="max-width:220px;margin:0" oninput="render()">
+    </div>
+    <div id="list"></div>
+    <p class="small">Sample levels are for preview only. Votes in this version are local demonstrations, not public votes.</p>
+  </section>
+  <section class="formbox hidden" id="submit">
+    <h2>＋ Submit a Demon</h2>
+    <p>Add a level to your local preview.</p>
+    <form id="demonForm">
+      <label>Demon name</label><input id="name" required maxlength="80" placeholder="e.g. Tidal Wave">
+      <label>Creator</label><input id="creator" maxlength="60" placeholder="Level creator">
+      <label>Thumbnail image</label><input id="image" type="file" accept="image/*">
+      <label>Difficulty (1–10)</label><input id="difficulty" type="number" min="1" max="10" value="10" required>
+      <button type="submit">ADD DEMON</button>
+      <button type="button" class="secondary" onclick="hideSubmit()">CANCEL</button>
+    </form>
+  </section>
+  <section class="formbox hidden" id="account">
+    <h2>Player Account</h2>
+    <p>Account login will be connected to the real backend in the next setup step.</p>
+    <label>Email</label><input type="email" placeholder="player@example.com">
+    <label>Password</label><input type="password" placeholder="Password">
+    <button onclick="alert('Demo only! Real registration requires backend setup.')">SIGN IN</button>
+    <button class="secondary" onclick="document.querySelector('#account').classList.add('hidden')">CLOSE</button>
+  </section>
+</main>
+<footer>YOUR HARDEST DEMON · COMMUNITY PROJECT</footer>
+<script>
+const levels=[
+{name:"Tidal Wave",creator:"OniLink",difficulty:10,votes:0,color:"#254b72"},
+{name:"Silent clubstep",creator:"TheRealSailent",difficulty:9.7,votes:0,color:"#632b45"},
+{name:"Bloodbath",creator:"Riot",difficulty:9.3,votes:0,color:"#812b38"},
+{name:"Cataclysm",creator:"GDSheriff",difficulty:8.8,votes:0,color:"#40306b"}
+];
+function render(){
+ const q=document.querySelector('#search').value.toLowerCase();
+ const sorted=levels.filter(x=>x.name.toLowerCase().includes(q)).sort((a,b)=>b.difficulty-a.difficulty);
+ document.querySelector('#list').innerHTML=sorted.map((x,i)=>`
+ <article class="card level">
+ <div class="rank">#${levels.slice().sort((a,b)=>b.difficulty-a.difficulty).indexOf(x)+1}</div>
+ <div class="thumb" style="background:linear-gradient(135deg,${x.color},#171321);display:grid;place-items:center;font-size:24px">◆</div>
+ <div><h3>${escapeText(x.name)}</h3><div class="small">by ${escapeText(x.creator||'Unknown creator')}</div><div class="small">Difficulty ${x.difficulty}/10 · ${x.votes} votes</div></div>
+ <button class="vote" onclick="vote('${escapeText(x.name).replace(/'/g,"&#39;")}')">▲ Vote</button>
+ </article>`).join('')||'<p>No demons found.</p>';
+ document.querySelector('#total').textContent=levels.length;
+ document.querySelector('#votes').textContent=levels.reduce((s,x)=>s+x.votes,0);
+}
+function escapeText(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function vote(name){const x=levels.find(x=>x.name===name);if(x){x.votes++;x.difficulty=Math.min(10,Math.round((x.difficulty+0.1)*10)/10);render()}}
+function showSubmit(){document.querySelector('#submit').classList.remove('hidden');document.querySelector('#submit').scrollIntoView({behavior:'smooth'})}
+function hideSubmit(){document.querySelector('#submit').classList.add('hidden')}
+function showAccount(){document.querySelector('#account').classList.remove('hidden');document.querySelector('#account').scrollIntoView({behavior:'smooth'})}
+document.querySelector('#demonForm').addEventListener('submit',e=>{
+ e.preventDefault();
+ const file=document.querySelector('#image').files[0];
+ const name=document.querySelector('#name').value.trim();
+ if(!name)return;
+ const d={name,creator:document.querySelector('#creator').value.trim()||'Community member',difficulty:Number(document.querySelector('#difficulty').value),votes:0,color:'#48345e'};
+ levels.push(d);
+ if(file){const reader=new FileReader();reader.onload=()=>{d.preview=reader.result;renderThumbs()};reader.readAsDataURL(file)}
+ e.target.reset();hideSubmit();render();
+});
+function renderThumbs(){}
+render();
+</script>
+</body>
+</html>
